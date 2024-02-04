@@ -1,18 +1,25 @@
 
 
-
 interface Props {
-    name: string;
-    url: string
+    names: string[];
+    urls: string[];
 }
 
-export default function PokeView({name, url}: Props) {
-    return(
-        <>
-            <div className="item">
-                <p>{name}</p>
-                <img src={url} alt={name} />
-            </div>
-        </>
-    )
-}
+export default function PokeView({names, urls}: Props) {
+        return(
+            <>
+            {names.map((pokeName, index) => {
+                if(index % 2 !== 0) {
+                    return(
+                        <div key={index} className="pokeName">
+                        <p>{pokeName}</p>
+                        <img src={urls[index]} alt={pokeName} />
+                    </div>
+                    )
+                }
+       
+            })}
+
+            </>
+        )
+    }

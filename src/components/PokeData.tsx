@@ -3,28 +3,34 @@ import PokeView from "./PokeView";
 
 
 export default function PokeData() {
-    const [pokeName, setPokeName] = useState("");
-    const [pokeURL, setPokeURL] = useState("");
+    const [pokeName, setPokeName] = useState<string[]>([]);
+    const [pokeURL, setPokeURL] = useState<string[]>([]);
 
     useEffect(() => {
-        const connect = async () => {
-            try {
-                const data = await fetch("https://pokeapi.co/api/v2/pokemon-form/35/");
-                if (!data.ok) {
-                    throw new Error("Sorry, we couldn't connect to our server!");
-                }
-                const fetchedData = await data.json();
-                  console.log(fetchedData)
-                  setPokeName(fetchedData.pokemon.name);
-                  setPokeURL(fetchedData.sprites.front_default);
-    
-            } catch (error) {
-                console.log(error);
+
+        const fetchAllData = async () => {
+          try {
+            const pokeList: string[] = ["3", "6", "9", "25", "59", "65", "94", "130", "149", "150"];
+            
+            for (const num of pokeList) {
+              const url = `https://pokeapi.co/api/v2/pokemon-form/${num}/`;
+              const response = await fetch(url);
+              const pokeData = await response.json();
+              setPokeName(prevPokeNames => [...prevPokeNames, pokeData.name]);
+              setPokeURL(prevPokeURLs => [...prevPokeURLs, pokeData.sprites.front_default]);
             }
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
         };
-        connect();
-    }, [])
+
+        fetchAllData();
+ 
+      }, []);
 
 
-    return <PokeView name={pokeName} url={pokeURL} />
+
+
+
+    return <PokeView names={pokeName} urls={pokeURL} />
 }
