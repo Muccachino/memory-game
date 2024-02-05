@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
 import PokeView from "./PokeView";
 
+type AllPokemon = {
+  name: string;
+  url: string;
+}
+
 
 export default function PokeData() {
-    const [pokeName, setPokeName] = useState<string[]>([]);
-    const [pokeURL, setPokeURL] = useState<string[]>([]);
+    const [pokemons, setPokemons] = useState<AllPokemon[]>([]);
 
     useEffect(() => {
-
+      
         const fetchAllData = async () => {
           try {
-            const pokeList: string[] = ["3", "6", "9", "25", "59", "65", "94", "130", "149", "150"];
             
-            for (const num of pokeList) {
-              const url = `https://pokeapi.co/api/v2/pokemon-form/${num}/`;
-              const response = await fetch(url);
-              const pokeData = await response.json();
-              setPokeName(prevPokeNames => [...prevPokeNames, pokeData.name]);
-              setPokeURL(prevPokeURLs => [...prevPokeURLs, pokeData.sprites.front_default]);
-            }
+            const url = `https://pokeapi.co/api/v2/pokemon-form/?limit=151`;
+            const response = await fetch(url);
+            const pokeData = await response.json();
+            setPokemons([...pokeData.results])
+            console.log(pokemons)
+ 
           } catch (error) {
             console.error('Error fetching data:', error);
           }
@@ -26,11 +28,8 @@ export default function PokeData() {
 
         fetchAllData();
  
-      }, []);
+      }, []); 
 
-
-
-
-
-    return <PokeView names={pokeName} urls={pokeURL} />
+    
+    return <PokeView pokemon={pokemons} />
 }
