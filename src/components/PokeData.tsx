@@ -6,8 +6,12 @@ type AllPokemon = {
   url: string;
 }
 
+interface Props {
+  handler: () => void;
+}
 
-export default function PokeData() {
+
+export default function PokeData({handler}: Props) {
     const [pokemons, setPokemons] = useState<AllPokemon[]>([]);
 
     useEffect(() => {
@@ -31,5 +35,5 @@ export default function PokeData() {
       }, []); 
 
     
-    return <PokeView pokemon={pokemons} />
+    return <PokeView pokemon={pokemons} handler={handler} />
 }

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 
 type AllPokemon = {
     name: string;
@@ -6,7 +7,7 @@ type AllPokemon = {
 
 interface Props {
     pokemon: AllPokemon[];
-    //handler: () => void;
+    handler: () => void;
 }
 
 const randomList = (num: number) => {
@@ -21,22 +22,32 @@ const randomList = (num: number) => {
 }
 
 
-export default function PokeView({pokemon}: Props)  {
+export default function PokeView({pokemon, handler}: Props)  {
+  const [gamePokes, setGamePokes] = useState<AllPokemon[]>([])
   const pokeList = randomList(12);
+  
+  useEffect(() => {
+      pokemon.map((poke, index) => {
+      if (pokeList.includes(index)) {
+        setGamePokes([...gamePokes, poke])
+        console.log(poke)
+      }
+    })
+  },[])
+
 
   return(
-    <>
-    {pokemon.map((poke, index) => {
-      if(pokeList.includes(index)) {
+    <div id="allPokemon">
+    {gamePokes.map((poke, index) => {
+
         return (
-            <div key={index} className="pokeCard">
+            <div key={index} className="pokeCard" onClick={handler}>
               <p>{poke.name}</p>
               <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${poke.url.split("/")[6]}.png`} alt={poke.name} />
             </div>
         )
-      }
     })}
-    </>
+    </div>
   )
 
 }

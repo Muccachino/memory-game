@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+#header {
+  background-color: aquamarine;
+  border: 1px solid black;
+  text-align: center;
+
+  #counter {
+    margin-right: 20px;
+  }
+  #highscore {
+    margin-left: 20px;
+  }
+}
+
+#allPokemon {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+
+  .pokeCard {
+    border: 1px solid black;
+    background-color: goldenrod;
+    text-align: center;
+  }
+}
