@@ -7,7 +7,7 @@ type AllPokemon = {
 }
 
 interface Props {
-  handler: () => void;
+  handler: (pokes: AllPokemon[]) => void;
 }
 
 
@@ -23,14 +23,14 @@ export default function PokeData({handler}: Props) {
             const response = await fetch(url);
             const pokeData = await response.json();
             setPokemons([...pokeData.results])
-            console.log(pokemons)
  
           } catch (error) {
             console.error('Error fetching data:', error);
           }
         };
-
         fetchAllData();
+
+        
  
       }, []); 
 
