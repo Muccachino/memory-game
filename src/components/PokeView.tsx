@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 
 type AllPokemon = {
     name: string;
@@ -7,49 +6,33 @@ type AllPokemon = {
 
 interface Props {
     pokemon: AllPokemon[];
-    handler: (pokes: AllPokemon[]) => void;
+    handler: (poke: AllPokemon) => void;
+    counter: number;
+    highscore: number
 }
 
 
-const randomList = (num: number) => {
-  const list: number[] = []
-  while (list.length !== num) {
-    const randomNum = Math.floor(Math.random() * 150)
-    if(!(list.includes(randomNum))) {
-      list.push(randomNum);
-    }
-  }
-  return list;
-}
-
-
-export default function PokeView({pokemon, handler}: Props)  {
-  const [gamePokes, setGamePokes] = useState<AllPokemon[]>([])
-  const pokeList = randomList(12);
-
-  useEffect(() => {
-    const filteredPokemon: AllPokemon[] = []
-      pokemon.map((poke, index) => {
-      if (pokeList.includes(index)) {
-        filteredPokemon.push(poke)
-      }
-      setGamePokes(filteredPokemon)
-    })
-  },[pokemon])
-
+export default function PokeView({pokemon, handler, counter, highscore}: Props)  {
 
   return(
-    <div id="allPokemon">
-    {gamePokes.map((poke, index) => {
+    <>
+      <div id="header">
+        <h1 id="title">Pokemon Memory Game</h1>
+        <span id="counter">Current: {counter}</span>
+        <span id="highscore">Highscore: {highscore}</span>
+      </div>
+      <div id="allPokemon">
+      {pokemon.map((poke, index) => {
 
-        return (
-            <div key={index} className="pokeCard" onClick={() => handler(gamePokes)}>
-              <p>{poke.name}</p>
-              <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${poke.url.split("/")[6]}.png`} alt={poke.name} />
-            </div>
-        )
-    })}
-    </div>
+          return (
+              <div key={index} className="pokeCard" onClick={() => handler(poke)}>
+                <p>{poke.name.charAt(0).toUpperCase() + poke.name.slice(1)}</p>
+                <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${poke.url.split("/")[6]}.png`} alt={poke.name} />
+              </div>
+          )
+      })}
+      </div>
+    </>
   )
 
 }

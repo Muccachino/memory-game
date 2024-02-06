@@ -1,12 +1,27 @@
 * {
   margin: 0;
   box-sizing: border-box;
+  font-family: Prompt,sans-serif;
+}
+
+body {
+  background-color: #5F0F40;
+}
+
+#root {
+  padding: 40px 15% 40px 15%;
 }
 
 #header {
-  background-color: aquamarine;
+  background-color: #FB8B24;
   border: 1px solid black;
   text-align: center;
+  margin-bottom: 50px;
+  padding: 20px;
+
+  #title {
+    margin-bottom: 20px;
+  }
 
   #counter {
     margin-right: 20px;
@@ -21,8 +36,11 @@
   grid-template-columns: repeat(6, 1fr);
 
   .pokeCard {
-    border: 1px solid black;
-    background-color: goldenrod;
+    border: 2px solid rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    background-color: #E36414;
     text-align: center;
+    margin: 10px;
+    padding: 10px;
   }
 }
